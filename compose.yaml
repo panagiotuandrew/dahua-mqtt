@@ -10,7 +10,7 @@ services:
       VTO_USER: "admin"
       VTO_PASS: "your-dahua-password"
       TARGET_INDEX: "9902"
-      MQTT_URL: "mqtt://localhost"
+      MQTT_URL: "your-mqtt-url"
       MQTT_TOPIC: "dahua/doorbell/ring"
       COOLDOWN_SECONDS: "8"
 
