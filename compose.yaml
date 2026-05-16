@@ -6,12 +6,12 @@ services:
     network_mode: host
 
     environment:
-      VTO_BASE_URL: "http://192.168.1.50"
+      VTO_BASE_URL: "http://your-ip-address"
       VTO_USER: "admin"
       VTO_PASS: "your-dahua-password"
-      TARGET_INDEX: "9902"
+      TARGET_INDEX: "your-apartment-number"
       MQTT_URL: "your-mqtt-url"
-      MQTT_TOPIC: "dahua/doorbell/ring"
+      MQTT_TOPIC: "your-mqtt-topic"
       COOLDOWN_SECONDS: "8"
 
     command: |
