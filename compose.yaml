@@ -1,5 +1,5 @@
 services:
-  dahua-doorbell-bridge:
+  dahua-mqtt:
     image: alpine:3.20
     container_name: dahua-doorbell-bridge
     restart: unless-stopped
@@ -11,7 +11,7 @@ services:
       VTO_PASS: "your-dahua-password"
       TARGET_INDEX: "9902"
       MQTT_URL: "mqtt://localhost"
-      MQTT_TOPIC: "dahua/doorbell/9902/ring"
+      MQTT_TOPIC: "dahua/doorbell/ring"
       COOLDOWN_SECONDS: "8"
 
     command: |
