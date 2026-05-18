@@ -3,6 +3,9 @@
   <a href="https://docs.docker.com/compose/">
     <img src="https://img.shields.io/badge/docker%20compose-0e4df2" alt="Docker Compose">
   </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+  </a>
 </p>
 
 > [!IMPORTANT]
