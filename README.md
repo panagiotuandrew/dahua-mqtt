@@ -18,3 +18,43 @@ Dahua MQTT publishes ring presses from Dahua Intercoms as MQTT events.
 - ```TARGET_INDEX```: Your apartment's number
 - ```MQTT_URL```: Your MQTT broker's URL, use ``mqtt://localhost`` if on the same device
 - ```MQTT_TOPIC```: Your preffered MQTT topic
+
+# Finding your apartment's number
+> [!WARNING]
+> The apartment number is not the same as the one located in your internal monitor.
+
+To find your apartment's number, log into your VTO's admin page and open the Developer Tools by right clicking and selecting "Inspect" from the list. 
+From there, go to the console tab, and paste the code shown below.
+
+```
+const res = await fetch('/cgi-bin/eventManager.cgi?action=attach&codes=[All]', {
+  credentials: 'include',
+});
+
+console.log('status', res.status, res.headers.get('content-type'));
+
+const reader = res.body.getReader();
+const decoder = new TextDecoder();
+
+while (true) {
+  const { value, done } = await reader.read();
+  if (done) break;
+
+  const chunk = decoder.decode(value, { stream: true });
+  console.log(chunk);
+}
+```
+Then, press the call button for your apartment and look for an event that looks like this:
+```
+Code=CallNoAnswered;action=Start;index=9902;data={
+   "CallID" : "9",
+   "IsEncryptedStream" : false,
+   "LockNum" : 2,
+   "SupportPaas" : false,
+   "TCPPort" : 37777
+}
+```
+> [!NOTE]
+> While the event's name may contain ```CallNoAnswered```, it fires immediately when the call button is pressed, not after the call has been ignored.
+
+Your apartment's number is the ```index``` shown there.
