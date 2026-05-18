@@ -1,11 +1,7 @@
 <h1 align="center">Dahua MQTT</h1>
 <p align="center">
-  <a href="https://docs.docker.com/compose/">
-    <img src="https://img.shields.io/badge/docker%20compose-0e4df2" alt="Docker Compose">
-  </a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
-  </a>
+  <a href="https://docs.docker.com/compose/"><img src="https://img.shields.io/badge/docker%20compose-0e4df2" alt="Docker Compose"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
 </p>
 
 > [!IMPORTANT]
@@ -21,6 +17,7 @@ Dahua MQTT publishes ring presses from Dahua Intercoms as MQTT events.
 - ```TARGET_INDEX```: The Dahua event index for your apartment
 - ```MQTT_URL```: Your MQTT broker's URL, use ``mqtt://localhost`` if on the same device
 - ```MQTT_TOPIC```: Your preferred MQTT topic
+- ```COOLDOWN_SECONDS```: Time in seconds to ignore repeated events after a ring, default is ```5```
 
 # Finding your apartment's number
 > [!WARNING]
