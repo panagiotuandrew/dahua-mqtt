@@ -1,0 +1,53 @@
+services:
+  dahua-mqtt:
+    image: alpine:3.20
+    container_name: dahua-mqtt
+    restart: unless-stopped
+    network_mode: host
+
+    environment:
+      VTO_BASE_URL: "http://your-ip-address"
+      VTO_USER: "admin"
+      VTO_PASS: "your-dahua-password"
+      TARGET_INDEX: "your-apartment-number"
+      MQTT_URL: "your-mqtt-url"
+      MQTT_TOPIC: "your-mqtt-topic"
+      COOLDOWN_SECONDS: "5"
+
+    command: |
+      sh -c '
+        apk add --no-cache curl mosquitto-clients >/dev/null
+
+        echo "Starting Dahua doorbell bridge"
+        echo "Listening for CallNoAnswered index=$$TARGET_INDEX"
+        echo "Publishing MQTT messages to $$MQTT_URL/$$MQTT_TOPIC"
+
+        while true; do
+          last_trigger=0
+
+          curl -g -sS --no-buffer --anyauth \
+            -u "$$VTO_USER:$$VTO_PASS" \
+            "$$VTO_BASE_URL/cgi-bin/eventManager.cgi?action=attach&codes=[CallNoAnswered]" |
+          while IFS= read -r line; do
+            case "$$line" in
+              Code=CallNoAnswered\;action=Start\;index=$$TARGET_INDEX\;*)
+                now=$$(date +%s)
+
+                if [ $$((now - last_trigger)) -ge "$$COOLDOWN_SECONDS" ]; then
+                  last_trigger=$$now
+                  echo "$$(date -Iseconds) Doorbell detected: $$line"
+
+                  mosquitto_pub -L "$$MQTT_URL/$$MQTT_TOPIC" -m "ON" \
+                    && echo "$$(date -Iseconds) MQTT published: $$MQTT_TOPIC = ON" \
+                    || echo "$$(date -Iseconds) MQTT publish failed"
+                else
+                  echo "$$(date -Iseconds) Ignored duplicate event"
+                fi
+                ;;
+            esac
+          done
+
+          echo "$$(date -Iseconds) Dahua stream ended, reconnecting in 2 seconds"
+          sleep 2
+        done
+      '
