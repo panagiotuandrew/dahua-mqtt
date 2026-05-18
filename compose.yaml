@@ -30,7 +30,7 @@ services:
             "$$VTO_BASE_URL/cgi-bin/eventManager.cgi?action=attach&codes=[CallNoAnswered]" |
           while IFS= read -r line; do
             case "$$line" in
-              Code=CallNoAnswered\;action=Start\;index=$$TARGET_INDEX*)
+              Code=CallNoAnswered\;action=Start\;index=$$TARGET_INDEX\;*)
                 now=$$(date +%s)
 
                 if [ $$((now - last_trigger)) -ge "$$COOLDOWN_SECONDS" ]; then
