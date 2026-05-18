@@ -18,9 +18,9 @@ Dahua MQTT publishes ring presses from Dahua Intercoms as MQTT events.
 - ```VTO_BASE_URL```: Your VTO's IP address
 - ```VTO_USER```: Your VTO's username
 - ```VTO_PASS```: Your VTO's password
-- ```TARGET_INDEX```: Your apartment's number
+- ```TARGET_INDEX```: The Dahua event index for your apartment
 - ```MQTT_URL```: Your MQTT broker's URL, use ``mqtt://localhost`` if on the same device
-- ```MQTT_TOPIC```: Your preffered MQTT topic
+- ```MQTT_TOPIC```: Your prefered MQTT topic
 
 # Finding your apartment's number
 > [!WARNING]
