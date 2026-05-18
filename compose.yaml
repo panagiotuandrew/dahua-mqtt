@@ -12,7 +12,7 @@ services:
       TARGET_INDEX: "your-apartment-number"
       MQTT_URL: "your-mqtt-url"
       MQTT_TOPIC: "your-mqtt-topic"
-      COOLDOWN_SECONDS: "8"
+      COOLDOWN_SECONDS: "5"
 
     command: |
       sh -c '
